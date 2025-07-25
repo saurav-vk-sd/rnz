@@ -1,0 +1,125 @@
+1. Maven: Its a build automation tool which makes the development of java projects easier by providing features such as:
+          a. Following a standard project structure:
+                      
+                      my-app
+│-- pom.xml  (Project configuration)
+│-- src
+│   │-- main
+│   │   │-- java  (Source code)
+│   │   │-- resources  (Configuration files)
+│   │   │-- webapp  (Web application files, if applicable)
+│   │-- test
+│   │   │-- java  (Test cases)
+│   │   │-- resources  (Test-related configurations)
+│-- target  (Compiled output)
+
+          b. This will help by structuring the content of the project in an efficient manner so that It becomes easily readable and the user can basically test or monitor whichever section they like since its organised.
+
+          c. It also helps in efficiently managing the build lifecycle of the project efficiently since it allows users to perform any one of the phases of the build lifecycle (validate -> compile -> test -> package -> deploy) whwnever they desire.
+    
+          d. It also provides efficient dependency management sicne all of the dependencies are maintained in a central maven repository.
+
+
+2. Spring: Its a Java framework that provides a comprehensive interface for making the development of enterprise applications easier and more efficient by providing several features including:
+           
+           a. IOC (Inversion of Control): Spring automatically manages dependencies without the values being hardcoded and also helps in dependency injections. Rather than users manually creating objects using the new keyword, Spring does that for us automatically using beans and IOC containers.
+       
+           b. Dependency Injection: Ensures loosely coupled components by injecting dependencies without having to hardcode them.
+
+           c. Aspect oriented programming: Helps in separating cross cutting concerns (components that are required in multiple parts of the program such as security , loggin , transaction management and so on) from business logic.
+
+           d. Also has mutiple Spring modules that can be used in mutiple use cases depending on the objective such as spring boot , spring mvc , spring security and so on.
+
+           e. Provides seamless integration with data sources such as databases and jdbc using jpa , orm engines.
+
+3. Annotations: Type of metadata that provides additional information about the code to the compiler and run time. The ydo not affext the code in any way but can be used for purposes such as code documentation. configuration and behaviour control.
+
+4. Stereotype annotations: Spring specialized annotations that helps spring in automatically detecting and registering beans in the application context. 
+              Types:
+                    1. Service: Defiens the method as a part of the busijness logic.
+                    2. Component: Used for representing Spring based component (registers the class as a spring managed component)
+                    3. Repository : Used for creating Data Access Objects.
+                    4. Controller: Used in Spring MVC Controllers for handling web requests.
+
+5. JDBC: Java database Connectivity: API used for establishing connections between java programs and any data sources such as RDBs , SQL databases and so on. I t also removes the overhead of typing some pof the complex SQL  queries.
+        Steps:
+              1. Load the driver class (Class.forName("com.mysql.cj.jdbc.Driver"))
+              2. Create a connection object for establishing a connection with the database (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbname" , username , password);)
+              3. Identify the type of query to be executed:
+                 a. Static queries: Statement object (Statement stmnt = new Statement());
+                 b. Dynamic queries : PreparedStatement object ( PreparedStatement stmnt = new PreparedStatement(); )
+                 c. Stored Procedures : CallableStatement object ( CallableStatement obj = new CallableStatement();)
+              4. Execute the query:
+                 a. executeUpdate : for performing INSERT , UPDATE , DELETE and DDL operations.
+                 b. executeQuery : for performing ONLY SELECT STATEMENTS (Returns a ResultSet object)
+                 c. execute : if the developer is unsure of the query does or does not return a result.
+
+                  Example: Statement stmnt = new Statement();
+                           ResultSet rs = stmnt.executeQuery("SELECT * FROM db");
+                           while(rs.next()) {
+                                             System.out.println(rs.getString());
+                                            }
+                           stmnt.close();
+                           con.close();                 
+
+              5. close resources.
+
+6. JPA : Guidelines or standard used for performing ORM. 
+         Key concepts in JPA:
+                            1. Entity : Java classes that are mapped to the database tables
+                            2. EntityManagerFactory : Interface used for creating and managing EntityManager instances.
+                            3. EntityManager : Interface used for handling database operations : persist(saving) , merge(update) , remove(delete)
+         Steps:
+              1. Create an EntityManagerFactory instance (EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence-unit");) [Persistence unit defined in persistence.xml with proprties such as driver info , dbname and path , username , password and details such as update , delete and create ,etc.]
+              2. Create an EntityManager instance (EntityManager em = emf.createEntityManager();)
+              3. Begin transaction (em.getTransaction().begin();)
+              4. Perform transaction.
+              5. Commit or rollback the transaction 
+              6. close resources
+
+7. Entity Lifecycle:
+                    1. Transient : The entity is newly created and not yet persisted in the db.
+                    2. Managed : The entity is nwo attached to the PersistenceContext (jpa element responsible for performign db operations) and any change made in the entity will be tracked and and synchronizerd with the db.
+                    3. Detatched : The entity is now detatched from the persistence context and any changes made aafter that will not be tracked and synced.
+                    4. Removed : The entity is marked for deletion and will be removed from the db upon committing.
+
+8. Hibernate : ORM engines that is used for persisting java objects to databses by following the jpa standards or guidelines.
+               Features:
+                       1. Lazy Loading : Only loads the data whenever required
+                       2. HQL (Hibernate Query Language) : Object Oriented Approach for performing or executing SQL queries:
+                                                         1. FROM Clause: Returns all the rows from the table
+                                                              String hql = "FROM employee";
+                                                              Query query = session.executeQuery(hql); 
+                                                              List<Employee> res = query.list();
+
+                                                         2. WHERE Clause : Returns all the rows which satisfies a given condition
+                                                               String hql = "SELECT * FROM employee e WHERE e.salary > 1000000";
+                                                               Query query = session.createQuery(hql);
+                                                               List<Employee> res = query.list();
+                                                          
+                                                         3. SELECT Clause: Returns the rows from table
+                                                                 String hql = "SELECT e.name FROM employee e";
+                                                                 Query query = session.createQuery(hql);
+                                                                 List<String> res = query.list();
+    
+                                                         4. UPDATE Clause: Used for updating infop in the db
+                                                                 String hql = "UPDATE employee SET name = "new name" WHERE id = 12345";
+                                                                 Query query = session.createUpdate(hql);
+                                                                 query.executeUpdate();
+                
+                                                         5. DELETE Clause: Used for deleting data
+                                                                 String hql = "DELETE FROM employee WHERE id = 12345";
+                                                                 Query query = session.createQuery(hql);
+                                                                 query.executeUpdate();
+                                                                 
+                                                         6. ORDER BY Clause: Used for sorting values
+                                                                  String hql = "FROM employee e ORDER BY e.salary";
+                                                                  Query query = session.createQuery(hql);
+                                                                  List<Emplyee> res = query.list();
+
+
+9. 2 levels of caching in JPA: 
+           1. Level 1 cache (EntityManager level): all of the method calls and frequestn requests made within one transaction (one instance of EntityManager) are cached for faster recovery.
+           2. Level 2 cache : shared across multiple EntityManager instances.
+
+10. 

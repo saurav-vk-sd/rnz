@@ -1,0 +1,17 @@
+1. Characteristics of microservices:
+   -> self-contained
+   -> independent services
+   -> loosely coupled
+   -> separate databases
+   -> resilience
+  
+2. Issues with microservices: 
+    -> service to service communication : ip address and port number aren't the right choices as they are dynamic and can change from time to time.
+	   Solution: i. Synchronous communication - restTemplate, FeignClient
+	             ii. Asynchronous communication: WebClient
+				                                a. Eureka registry and discvery: Declarative approach. Follows a client-server architectures
+												    -> Eureka server: - maintains registry of ip addresses and port numbers of all ms.
+													                  - Default eureka server endpoint => http://localhost:8761/eureka
+													-> Eureka client: - all microservices are eureka clients.
+                                                                      - eureka clients will keep getting registered and deregistered from the registry.
+																	  

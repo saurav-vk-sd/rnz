@@ -1,0 +1,1248 @@
+student strength
+-------------------------------------
+
+
+package com.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.*;
+@Entity
+public class School {
+    @Id
+	private String schoolId ;
+	private String schoolName ;
+	private String schoolType ;
+	private String city ;
+	
+	@OneToMany(mappedBy="school",cascade=CascadeType.ALL)
+	private List<Student> studentList=new ArrayList<Student>();
+	public String getSchoolId() {
+		return schoolId;
+	}
+	public List<Student> getStudentList() {
+		return studentList;
+	}
+	public void setStudentList(List<Student> studentList) {
+		this.studentList = studentList;
+	}
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
+	}
+	public String getSchoolName() {
+		return schoolName;
+	}
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+	public String getSchoolType() {
+		return schoolType;
+	}
+	public void setSchoolType(String schoolType) {
+		this.schoolType = schoolType;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+}
+
+
+package com.bean;
+import jakarta.persistence.*;
+@Entity
+public class Student {
+    @Id
+	private String studentRollNumber ; 
+	private String studentName ; 
+	private int studentAge ; 
+	private String studentGender ; 
+	private String studentGrade ; 
+	private String studentSection ;
+	@ManyToOne
+	@JoinColumn(name = "schoolid", referencedColumnName = "schoolId")
+	private School school;
+	
+	public School getSchool() {
+		return school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
+	public String getStudentRollNumber() {
+		return studentRollNumber;
+	}
+	public void setStudentRollNumber(String studentRollNumber) {
+		this.studentRollNumber = studentRollNumber;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+	public int getStudentAge() {
+		return studentAge;
+	}
+	public void setStudentAge(int studentAge) {
+		this.studentAge = studentAge;
+	}
+	public String getStudentGender() {
+		return studentGender;
+	}
+	public void setStudentGender(String studentGender) {
+		this.studentGender = studentGender;
+	}
+	public String getStudentGrade() {
+		return studentGrade;
+	}
+	public void setStudentGrade(String studentGrade) {
+		this.studentGrade = studentGrade;
+	}
+	public String getStudentSection() {
+		return studentSection;
+	}
+	public void setStudentSection(String studentSection) {
+		this.studentSection = studentSection;
+	} 
+	
+	
+}
+
+
+package com.dao;
+
+import java.util.*;
+import java.util.stream.*;
+import org.springframework.stereotype.Repository;
+import com.repository.SchoolRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.bean.School;
+import com.bean.Student;
+
+@Repository
+public class SchoolDAO {
+	@Autowired
+	private SchoolRepository schoolRepository;
+	public void addSchool(School school){
+		schoolRepository.save(school);
+	}
+	
+	
+	public void registerStudentToSchool(String schoolId, List<Student> students ) {
+		Optional<School> optionalschool=schoolRepository.findById(schoolId);
+		if(optionalschool.isPresent()){
+		    School school=optionalschool.get();
+		    for(Student student:students){
+		        student.setSchool(school);
+		    }
+		    school.getStudentList().addAll(students);
+		    schoolRepository.save(school);
+		}
+	}
+
+	
+	public List<School> schoolWithMaximumStudents(String city){
+		return  schoolRepository.findSchoolMaxStudent(city);
+	}
+}
+
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
+import com.bean.School;
+import com.bean.Student;
+import java.util.List;
+
+
+public interface SchoolRepository extends JpaRepository<School , String>{
+    List<School> findByCity(String city);
+    
+    @Query("SELECT s FROM School s WHERE s.city=:city AND SIZE(s.studentList)=(SELECT MAX(SIZE(s.studentList))FROM School s WHERE s.city=:city)")
+    List<School> findSchoolMaxStudent(@Param("city")String city);
+
+}
+
+
+package com.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Student;
+
+public interface StudentRepository extends JpaRepository<Student,String>{
+
+}
+
+
+package com;
+import java.util.*;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.bean.School;
+import com.dao.SchoolDAO;
+
+@SpringBootApplication
+public class SchoolStrengthApplication implements CommandLineRunner {
+
+@Autowired
+private SchoolDAO schoolDAO;
+
+	public static void main(String[] args) {
+		
+		SpringApplication app = new SpringApplication(SchoolStrengthApplication.class);
+       
+        app.run(args);
+	}
+	
+	 @Override
+	    public void run(String... args) throws Exception {
+	//	System.out.println("Invoke the methods");
+	    }
+
+}
+
+
+q2 
+===================================================
+
+package com.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.*;
+
+
+
+@Entity
+public class Customer {
+	@Id
+	private long customerId ;
+	private String customerName ; 
+	private long customerContactNumber ; 
+	
+	@OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
+    private List<Loan> loanList=new ArrayList<Loan>();
+	
+	public long getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public long getCustomerContactNumber() {
+		return customerContactNumber;
+	}
+	public void setCustomerContactNumber(long customerContactNumber) {
+		this.customerContactNumber = customerContactNumber;
+	}
+	public List<Loan> getLoanList() {
+		return loanList;
+	}
+	public void setLoanList(List<Loan> loanList) {
+		this.loanList = loanList;
+	}
+    
+    
+
+}
+
+package com.bean;
+import jakarta.persistence.*;
+
+
+@Entity
+public class Loan {
+	@Id
+	private long loanNumber ;
+	private  String loanType ; 
+	private  double loanAmount ;
+	private  int repaymentYears ; 
+	private  double monthlyDue ;
+	@ManyToOne
+	@JoinColumn(name="customerid",referencedColumnName="customerId")
+	private Customer customer;
+	
+	public long getLoanNumber() {
+		return loanNumber;
+	}
+	public void setLoanNumber(long loanNumber) {
+		this.loanNumber = loanNumber;
+	}
+	public String getLoanType() {
+		return loanType;
+	}
+	public void setLoanType(String loanType) {
+		this.loanType = loanType;
+	}
+	public double getLoanAmount() {
+		return loanAmount;
+	}
+	public void setLoanAmount(double loanAmount) {
+		this.loanAmount = loanAmount;
+	}
+	public int getRepaymentYears() {
+		return repaymentYears;
+	}
+	public void setRepaymentYears(int repaymentYears) {
+		this.repaymentYears = repaymentYears;
+	}
+	public double getMonthlyDue() {
+		return monthlyDue;
+	}
+	public void setMonthlyDue(double monthlyDue) {
+		this.monthlyDue = monthlyDue;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+	
+
+	
+
+}
+
+
+package com.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.stereotype.Repository;
+import java.util.*;
+import  com.repository.CustomerRepository;
+import com.repository.LoanRepository;
+import com.bean.Customer;
+import java.util.stream.Collectors;
+import com.bean.Loan;
+
+@Repository
+
+public class BankDAO {
+	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private LoanRepository loanRepository;
+	
+	public void addCustomer(Customer customer) {
+	    
+	    customerRepository.save(customer);	
+		
+	}
+	
+	public void allocateLoanToCustomer(long customerId, Loan loan) {
+		Optional<Customer> optionalCustomer=customerRepository.findById(customerId);
+		if(optionalCustomer.isPresent()){
+		    Customer customer=optionalCustomer.get();
+		    loan.setCustomer(customer);
+		    loanRepository.save(loan);
+		}
+	
+	}
+	
+	public List<Loan> loanWithMaxDueMinYears(){
+	    
+	    List<Loan> loans=loanRepository.findAll();
+	   double maxDue=loans.stream().mapToDouble(Loan::getMonthlyDue).max().orElse(0);
+	   int minYears=loans.stream().mapToInt(Loan::getRepaymentYears).min().orElse(0);
+	   
+		return loans.stream().filter(loan -> loan.getMonthlyDue()==maxDue && loan.getRepaymentYears()==minYears).collect(Collectors.toList());
+		
+		
+	}
+
+}
+
+
+package com;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class LoanLenderApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		
+		SpringApplication app = new SpringApplication(LoanLenderApplication.class);
+       
+        app.run(args);
+	}
+	
+	 @Override
+	    public void run(String... args) throws Exception {
+		System.out.println("Invoke the methods");
+	    }
+}
+
+
+
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Customer;
+
+public interface CustomerRepository extends JpaRepository<Customer,Long> {
+
+
+
+}
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Loan;
+
+public interface LoanRepository extends JpaRepository<Loan,Long> {
+	
+	
+}
+
+
+
+
+
+q3
+==============================================================================
+
+
+package com.bean;
+import jakarta.persistence.*;
+
+
+@Entity
+public class Car {
+	
+	@Id
+	private String  regNumber ;
+	private String carName ;  
+	private String  carManufacturer ; 
+	private String carModel ; 
+	private String carRegistrationDate ; 
+	private double carPrice ;
+	@ManyToOne
+	@JoinColumn(name="sellerid",referencedColumnName="sellerId")
+	private Seller seller;
+
+	public String getRegNumber() {
+		return regNumber;
+	}
+
+	public void setRegNumber(String regNumber) {
+		this.regNumber = regNumber;
+	}
+
+	public String getCarName() {
+		return carName;
+	}
+
+	public void setCarName(String carName) {
+		this.carName = carName;
+	}
+
+	public String getCarManufacturer() {
+		return carManufacturer;
+	}
+
+	public void setCarManufacturer(String carManufacturer) {
+		this.carManufacturer = carManufacturer;
+	}
+
+	public String getCarModel() {
+		return carModel;
+	}
+
+	public void setCarModel(String carModel) {
+		this.carModel = carModel;
+	}
+
+	public String getCarRegistrationDate() {
+		return carRegistrationDate;
+	}
+
+	public void setCarRegistrationDate(String carRegistrationDate) {
+		this.carRegistrationDate = carRegistrationDate;
+	}
+
+	public double getCarPrice() {
+		return carPrice;
+	}
+
+	public void setCarPrice(double carPrice) {
+		this.carPrice = carPrice;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+
+}
+
+
+
+package com.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.*;
+
+@Entity
+public class Seller {
+	@Id
+	 private String sellerId  ;
+	 private String sellerName ;
+	 private String sellerContactNumber ;
+	 
+	@OneToMany(mappedBy="seller",cascade=CascadeType.ALL)
+	 private List<Car> carList=new ArrayList<Car>();
+
+	public String getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(String sellerId) {
+		this.sellerId = sellerId;
+	}
+
+	public String getSellerName() {
+		return sellerName;
+	}
+
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
+	}
+
+	public String getSellerContactNumber() {
+		return sellerContactNumber;
+	}
+
+	public void setSellerContactNumber(String sellerContactNumber) {
+		this.sellerContactNumber = sellerContactNumber;
+	}
+
+	public List<Car> getCarList() {
+		return carList;
+	}
+
+	public void setCarList(List<Car> carList) {
+		this.carList = carList;
+	}
+
+
+}
+
+
+package com.dao;
+
+
+import java.util.*;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.repository.SellerRepository;
+import com.repository.CarRepository;
+import java.util.stream.Collectors;
+import com.bean.Car;
+import com.bean.Seller;
+
+
+@Repository
+public class SellerDAO {
+	
+	@Autowired
+	private CarRepository carRepository;
+	@Autowired
+	private SellerRepository sellerRepository;
+	
+	public void addSeller(Seller seller) {
+		sellerRepository.save(seller);
+	}
+
+	
+	public void buyCar(String sellerId, Car car) {
+	Optional<Seller> optionalseller	=sellerRepository.findById(sellerId);
+	if(optionalseller.isPresent()){
+	    Seller seller=optionalseller.get();
+	    car.setSeller(seller);
+	    carRepository.save(car);
+	}
+	}
+	
+	
+	public List<Seller> sellerWithMaximumSalesCount(){
+		return sellerRepository.findSellerWithMaximumSales();
+		
+	}
+	
+	
+}
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Car;
+
+
+public interface CarRepository  extends JpaRepository<Car,String>{
+
+}
+
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Seller;
+import org.springframework.data.jpa.repository.Query;
+import java.util.List;
+
+public interface SellerRepository  extends JpaRepository<Seller,String>{
+@Query("SELECT s FROM Seller s WHERE SIZE(s.carList)=(SELECT MAX(SIZE(s.carList))FROM Seller s)")
+List<Seller> findSellerWithMaximumSales();
+	
+
+}
+
+
+
+package com;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SalesStatApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		
+		SpringApplication app = new SpringApplication(SalesStatApplication.class);
+       
+        app.run(args);
+	}
+	
+	 @Override
+	    public void run(String... args) throws Exception {
+		System.out.println("Invoke the methods");
+	    }
+	
+}
+
+
+
+q5 
+========================================================================
+
+
+	package com;
+
+import java.util.List;
+
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+public class AccountTransactionApplication implements CommandLineRunner{
+
+	public static void main(String[] args) {
+		SpringApplication.run(AccountTransactionApplication.class, args);
+	}
+	
+	 @Override
+	    public void run(String... args) throws Exception {
+		System.out.println("Invoke the methods");
+	    }
+
+}
+
+
+
+package com.bean;
+
+import java.util.List;
+import java.time.LocalDate;
+import jakarta.persistence.*;
+
+@Entity
+public class Account {
+    @Id
+    //@GeneratedValue(strategy=GenerationType.Auto)
+	private int accountNumber;
+	
+	private String holderName;
+	private LocalDate accountDate;
+	private double balance;
+	
+	@OneToMany(mappedBy="account",cascade=CascadeType.ALL)
+	private List<Transactions> transactionList ;
+	
+	
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getHolderName() {
+		return holderName;
+	}
+	public void setHolderName(String holderName) {
+		this.holderName = holderName;
+	}
+	public LocalDate getAccountDate() {
+		return accountDate;
+	}
+	public void setAccountDate(LocalDate accountDate) {
+		this.accountDate = accountDate;
+	}
+	public double getBalance() {
+		return balance;
+	}
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	
+	public List<Transactions> getTransactionList() {
+		return transactionList;
+	}
+	public void setTransactionList(List<Transactions> transactionList) {
+		this.transactionList = transactionList;
+	}
+
+	
+}
+
+
+package com.bean;
+
+import java.time.LocalDate;
+import jakarta.persistence.*;
+
+@Entity
+public class Transactions {
+    @Id 
+    //@GeneratedValue(strategy=GenerationType.Auto)
+	private int transactionId;
+	private LocalDate transactionDate;
+	private String transactionType;
+	private double amount;
+	
+	@ManyToOne
+	@JoinColumn(name="accountnumber", referencedColumnName="accountNumber")
+	private Account account;
+
+	public int getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(int transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public LocalDate getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(LocalDate transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	
+	
+	
+}
+
+
+
+package com.dao;
+
+import java.time.LocalDate;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.bean.Account;
+import com.bean.Transactions;
+
+import com.repository.AccountRepository;
+import com.repository.TransactionsRepository;
+
+@Repository
+public class AccountDAO {
+
+//Fill the code
+@Autowired
+private AccountRepository accountRepository;
+@Autowired
+private TransactionsRepository transactionsRepository;
+
+	public void addAccount(Account account) {
+	    accountRepository.save(account);
+		
+	}
+	
+	public void performTransactionOnAccount(int accountNumber, Transactions transaction)
+	{
+	Account account=accountRepository.findById(accountNumber).orElse(null);
+	if(account !=null){
+	    transaction.setAccount(account);
+	    transactionsRepository.save(transaction);
+	}else{
+	    throw new RuntimeException("Account not found for account number: "+accountNumber);
+	}
+	}
+
+        public List<Transactions> retrieveTransactionDetails(int accountnumber, LocalDate startDate, LocalDate endDate)
+	{
+		return transactionsRepository.findByAccountAccountNumberAndTransactionDateBetween(accountnumber,startDate,endDate);
+	}
+
+
+}
+
+
+package com.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bean.Account;
+public interface AccountRepository extends JpaRepository<Account, Integer>{
+
+}
+
+
+package com.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.time.LocalDate;
+import com.bean.Transactions;
+import java.util.List;
+
+public interface TransactionsRepository extends JpaRepository<Transactions,Integer>{
+    List<Transactions>  findByAccountAccountNumberAndTransactionDateBetween(int accountNumber,LocalDate startDate,LocalDate endDate);
+
+}
+
+
+
+
+q6
+=================================================================================
+
+
+package com.bean;
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class Address {
+
+	private String doorNo;
+	private String streetName;
+	private String district;
+	private String pincode;
+	
+	public String getDoorNo() {
+		return doorNo;
+	}
+	public void setDoorNo(String doorNo) {
+		this.doorNo = doorNo;
+	}
+	public String getStreetName() {
+		return streetName;
+	}
+	public void setStreetName(String streetName) {
+		this.streetName = streetName;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getPincode() {
+		return pincode;
+	}
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+}
+
+
+package com.bean;
+
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Embedded;
+@Entity
+public class Customer {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int custId;
+	private String custName;
+	
+	@Embedded
+	private Address address;
+
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+    public void setAddress(Address address){
+        this.address=address;
+    }
+    public Address getAddress(){
+        return address;
+    }
+}
+
+
+
+package com.dao;
+
+
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.bean.Address;
+import com.bean.Customer;
+
+public class CustomerDAO {
+	
+	private Session session;
+	
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public int addCustomer(Customer customer, Address address)
+	{
+	    Transaction tx=session.beginTransaction();
+	    customer.setAddress(address);
+	    session.save(customer);
+	    int customerid=customer.getCustId();
+	    tx.commit();
+		return customerid;
+	}
+	
+
+}
+
+
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-configuration PUBLIC  
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"  
+         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+ <session-factory>  
+    <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>  
+    <property name="connection.url">jdbc:mysql://localhost:3306/test</property>  
+    <property name="connection.username">root</property>
+    <property name="connection.password">root</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
+    <property name="hbm2ddl.auto">create</property>
+    <property name="show_sql">true</property>
+    <mapping class="com.bean.Customer"/>
+ </session-factory>  
+  
+</hibernate-configuration>   
+
+
+
+
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import com.bean.Address;
+import com.bean.Customer;
+import com.dao.CustomerDAO;
+
+
+public class TestApplication {
+
+	public static void main(String[] args) {
+        //fill code	
+        SessionFactory factory=new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        Session session=factory.openSession();
+        
+        CustomerDAO customerDAO=new CustomerDAO();
+        customerDAO.setSession(session);
+        
+        Customer customer =new Customer();
+        customer.setCustName("John Doe");
+        
+        Address address=new Address();
+        address.setDoorNo("12A");
+        address.setStreetName("Park Avenue");
+        address.setPincode("600001");
+        
+        int customerId=customerDAO.addCustomer(customer,address);
+        System.out.println("Cutsomer saved with ID: "+customerId);
+        session.close();
+        factory.close();
+
+	}
+
+}
+
+
+
+
+q7
+=======================================================================================
+
+
+package com.bean;
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+public class Country {
+    @Id
+	private String countryName;
+	private String currency;
+	private String capital;
+	
+	@OneToMany(mappedBy="country",cascade=CascadeType.ALL)
+	private List<State> statelist;
+
+    public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public String getCapital() {
+		return capital;
+	}
+
+	public void setCapital(String capital) {
+		this.capital = capital;
+	}	 	  	    	  		      	 	
+	
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}	
+    public List<State> getStatelist(){
+        return statelist;
+    }
+    public void setstatelist(List<State> statelist){
+        this.statelist=statelist;
+    }
+}
+
+
+package com.bean;
+import java.util.List;
+import javax.persistence.*;
+import com.bean.Country;
+@Entity
+public class State {
+@Id
+    private String stateName;
+	private String language;
+	private long population;
+	
+	@ManyToOne
+	@JoinColumn(name="countryname")
+	private Country country;
+	
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {	 	  	    	  		      	 	
+		this.language = language;
+	}
+	public long getPopulation() {
+		return population;
+	}
+	public void setPopulation(long population) {
+		this.population = population;
+	}
+	public Country getCountry(){
+	    return country;
+	}
+	public void setCountry(Country country){
+	    this.country=country;
+	}
+}
+
+
+
+package com.dao;
+
+import java.util.List;
+import org.hibernate.query.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.bean.Country;
+import com.bean.State;
+
+public class CountryDAO {
+
+    private Session session;
+	
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public void addCountry(Country country)
+	{
+	  Transaction tx=session.beginTransaction();
+	  session.save(country);
+	  tx.commit();
+	}	
+	
+	public void addStatetoCountry(String countryName, State state)
+	{	 	  	    	  		      	 	
+	Transaction tx=session.beginTransaction();
+	Country country = session.get(Country.class , countryName);
+	if(country!=null){
+	    state.setCountry(country);
+	    session.save(state);
+	}
+	tx.commit();
+	}
+	
+	public List<State> stateWithMaxPopulation(String countryName)
+	{   
+	    String hql="FROM State WHERE country.countryName = :countryName AND population =(SELECT MAX(population) FROM State WHERE country.countryName = :countryName)";
+	    Query<State> query=session.createQuery(hql,State.class);
+	    query.setParameter("countryName",countryName);
+	    
+	    return query.list();
+	}
+	
+	public void removeCountry(String countryName)
+	{
+	Transaction tx=session.beginTransaction();
+	Country country =session.get(Country.class,countryName);
+	if(country!=null){
+	session.delete(country);
+	}
+	tx.commit();
+	}
+	
+}
+
+
+
+
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-configuration PUBLIC  
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"  
+         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+  
+<hibernate-configuration>  
+  
+<session-factory>  
+    <property name="hbm2ddl.auto">update</property>  
+    <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>  
+    <property name="connection.url">jdbc:mysql://localhost:3306/test</property>  
+    <property name="connection.username">root</property>
+    <property name="connection.password">root</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
+    <property name="show_sql">true</property> 
+    <mapping class="com.bean.Country"/>
+    <mapping class="com.bean.State"/>
+</session-factory>  
+  
+</hibernate-configuration> 
+
+
+
+
+
+
+public class TestApplication {
+    
+    public static void main(String[] args) {
+	
+    }
+    
+}
+

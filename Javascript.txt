@@ -1,0 +1,459 @@
+1. Javascript: A scripting language used to make reactive websites. I t also allows developers to manipulate
+            the DOM tree by adding , removing or updating DOM tree elements by traversing
+            to them.
+
+2. Data types in Javascript:
+            1. Primitive : number , string , null , undefined , boolean
+            2. composite types : Array , Object , Date ,...
+           
+3. Javascript isnt a strict type language (Developers can create and variables and store values without mentioning its data type)
+   Eg: Java : int a = 5; , int b;
+       Javascript : let a = 5; , b;
+
+4. In Javascript, when a variable is declared without any keyword, its default dtype is "any".
+   Eg: a = 20; (dtype of a = any)
+
+5. Arrays in Java script can be declared by using [] (Eg:var arr = [];)
+
+6. Traversing an array:
+              
+              1. Normal for loops:
+                        for (let index = 0; index < cities.length; index++) {
+                             const element = cities[index];
+                             console.log(element);
+                         } [otehr methods are there in vs code]
+               
+ 7. Event Handling : A process used for handlign different events such as button clicks, hovers and so on. The different event handling methods in javascript are:
+                   
+                ======================
+				MOUSE EVENTS
+				======================
+
+				onclick        - Triggers when an element is clicked
+				Example: Clicking a "Submit" button
+
+				ondblclick     - Fires when double-clicked
+				Example: Zooming into a photo on double-click
+
+				onmouseover    - When mouse hovers over an element
+				Example: Highlighting menu options on hover
+
+				onmouseout     - When mouse leaves an element
+				Example: Removing hover highlight from a card
+
+				onmousedown    - Mouse button is pressed
+				Example: Starting to drag a block
+
+				onmouseup      - Mouse button is released
+				Example: Dropping a dragged item
+
+				onmousemove    - Fires while the mouse moves over an element
+				Example: Drawing with a brush in a paint app
+
+
+				======================
+				KEYBOARD EVENTS
+				======================
+
+				onkeydown      - Triggers when a key is pressed
+				Example: Listening for Ctrl+S to save
+
+				onkeyup        - Triggers when a key is released
+				Example: Live feedback as user types and releases keys
+
+
+				======================
+				FORM EVENTS
+				======================
+
+				onsubmit       - Fires when a form is submitted
+				Example: Submitting a contact form
+
+				onchange       - Fires when an input value changes (after blur)
+				Example: Selecting a new option from a dropdown
+
+				oninput        - Fires as user types (real-time)
+				Example: Search autocomplete while typing
+
+				onfocus        - When an element gains focus
+				Example: Highlighting a field when clicked
+
+				onblur         - When an element loses focus
+				Example: Checking if the input is valid after leaving it
+
+				onreset        - When a form is reset
+				Example: Resetting form fields to default values
+
+
+				======================
+				WINDOW/DOCUMENT EVENTS
+				======================
+
+				onload         - Triggers when page or resource finishes loading
+				Example: Running a setup function on page load
+
+				onscroll       - When user scrolls the page
+				Example: Lazy-loading images while scrolling
+
+				onresize       - When window is resized
+				Example: Updating layout or elements on screen resize
+
+				onunload       - Fires when user is navigating away from the page
+				Example: Saving unsaved work
+
+				onerror        - Triggers when there’s a loading error
+				Example: Showing an error if an image fails to load
+
+
+				======================
+				TOUCH EVENTS (Mobile)
+				======================
+
+				ontouchstart   - Finger touches the screen
+				ontouchmove    - Finger moves on the screen
+				ontouchend     - Finger lifts off screen
+				Example: Swiping through a gallery, dragging items
+
+
+				======================
+				EVENT LISTENER METHOD
+				======================
+
+				addEventListener("event", callback)
+				Best practice for assigning events because it allows multiple listeners
+				Example: button.addEventListener("click", () => alert("Clicked!"));
+
+8. DOM tree manipulation: Javascript can be used t=for manipulating the DOM tree such as adding , removing elements as well as modifying the content.
+                        Manipulation methods:
+						            1. document.getElementById(id)
+									- Selects a single element by its ID.
+									- Example:
+									  const title = document.getElementById("main-title");
+									  title.textContent = "Updated Title";
+
+									2. document.getElementsByClassName(className)
+									- Returns a live HTMLCollection of elements with the given class.
+									- Example:
+									  const items = document.getElementsByClassName("list-item");
+									  items[0].style.color = "red";
+
+									3. document.getElementsByTagName(tagName)
+									- Returns all elements with the specified tag name.
+									- Example:
+									  const paragraphs = document.getElementsByTagName("p");
+									  console.log(paragraphs.length);
+
+									4. document.querySelector(selector)
+									- Returns the first element that matches a CSS selector.
+									- Example:
+									  const firstButton = document.querySelector(".btn");
+									  firstButton.disabled = true;
+
+									5. document.querySelectorAll(selector)
+									- Returns all elements that match a CSS selector (NodeList).
+									- Example:
+									  const allButtons = document.querySelectorAll(".btn");
+									  allButtons.forEach(btn => btn.style.background = "blue");
+
+									6. document.createElement(tagName)
+									- Creates a new HTML element.
+									- Example:
+									  const newDiv = document.createElement("div");
+									  newDiv.textContent = "Hello!";
+									  document.body.appendChild(newDiv);
+
+									7. element.appendChild(child)
+									- Adds a child node to the end of a parent element.
+									- Example:
+									  const list = document.getElementById("myList");
+									  const newItem = document.createElement("li");
+									  newItem.textContent = "New Item";
+									  list.appendChild(newItem);
+
+									8. element.remove()
+									- Removes the element from the DOM.
+									- Example:
+									  const adBanner = document.getElementById("ad");
+									  adBanner.remove();
+
+									9. element.removeChild(child)
+									- Removes a specific child from a parent element.
+									- Example:
+									  const list = document.getElementById("myList");
+									  const firstItem = list.children[0];
+									  list.removeChild(firstItem);
+
+									10. element.innerHTML
+									- Gets or sets the HTML content inside an element.
+									- Example:
+									  document.getElementById("box").innerHTML = "<strong>Bold!</strong>";
+
+									11. element.textContent
+									- Gets or sets the plain text content of an element.
+									- Example:
+									  document.getElementById("box").textContent = "Just text";
+
+									12. element.setAttribute(attr, value)
+									- Sets an attribute on an element.
+									- Example:
+									  const link = document.querySelector("a");
+									  link.setAttribute("target", "_blank");
+
+									13. element.getAttribute(attr)
+									- Gets the value of an attribute.
+									- Example:
+									  const href = link.getAttribute("href");
+
+									14. element.classList.add(className)
+									- Adds a class to the element.
+									- Example:
+									  button.classList.add("active");
+
+									15. element.classList.remove(className)
+									- Removes a class from the element.
+									- Example:
+									  button.classList.remove("disabled");
+
+									16. element.classList.toggle(className)
+									- Adds the class if not present, removes it if present.
+									- Example:
+									  button.classList.toggle("highlight");
+
+									17. element.insertBefore(newNode, referenceNode)
+									- Inserts a node before another node.
+									- Example:
+									  parent.insertBefore(newItem, parent.firstChild);
+
+									18. element.insertAdjacentHTML(position, html)
+									- Inserts HTML at a specific position relative to the element.
+									- Positions: "beforebegin", "afterbegin", "beforeend", "afterend"
+									- Example:
+									  box.insertAdjacentHTML("beforeend", "<p>Appended!</p>");
+
+									19. element.cloneNode(deep)
+									- Clones an element. If deep is true, clones all children too.
+									- Example:
+									  const copy = original.cloneNode(true);
+									  document.body.appendChild(copy);
+
+									20. element.addEventListener(event, callback)
+									- Attaches an event listener to an element.
+									- Example:
+									  button.addEventListener("click", () => alert("Clicked!"));
+
+
+9. DOM manipulation functions:
+                   
+				    1. element.innerHTML
+					- Gets or sets the HTML content inside an element.
+					- Example:
+					  document.getElementById("box").innerHTML = "<strong>Hello!</strong>";
+
+					2. element.textContent
+					- Gets or sets the plain text (no HTML) inside an element.
+					- Example:
+					  document.getElementById("box").textContent = "Just text";
+
+					3. element.style.property
+					- Changes inline CSS styles of an element.
+					- Example:
+					  document.getElementById("box").style.backgroundColor = "yellow";
+
+					4. document.createElement(tagName)
+					- Creates a new HTML element.
+					- Example:
+					  const newDiv = document.createElement("div");
+
+					5. document.createTextNode(text)
+					- Creates a text node (used with appendChild).
+					- Example:
+					  const text = document.createTextNode("Hello!");
+
+					6. element.appendChild(child)
+					- Adds a child node to the end of a parent element.
+					- Example:
+					  const box = document.getElementById("container");
+					  const newP = document.createElement("p");
+					  newP.textContent = "New paragraph";
+					  box.appendChild(newP);
+
+					7. element.append(...nodes)
+					- Appends multiple nodes or strings at once.
+					- Example:
+					  box.append("Hello", document.createElement("hr"));
+
+					8. element.remove()
+					- Removes the element from the DOM.
+					- Example:
+					  document.getElementById("ad-banner").remove();
+
+					9. element.removeChild(child)
+					- Removes a specific child from a parent.
+					- Example:
+					  const list = document.getElementById("myList");
+					  list.removeChild(list.children[0]);
+
+					10. element.setAttribute(attr, value)
+					- Sets an attribute on an element.
+					- Example:
+					  link.setAttribute("href", "https://example.com");
+
+					11. element.getAttribute(attr)
+					- Gets the value of an attribute.
+					- Example:
+					  const href = link.getAttribute("href");
+
+					12. element.classList.add(className)
+					- Adds a class to the element.
+					- Example:
+					  button.classList.add("active");
+
+					13. element.classList.remove(className)
+					- Removes a class from the element.
+					- Example:
+					  button.classList.remove("disabled");
+
+					14. element.classList.toggle(className)
+					- Adds class if not present, removes if present.
+					- Example:
+					  button.classList.toggle("highlight");
+
+					15. element.insertBefore(newNode, referenceNode)
+					- Inserts a node before another node.
+					- Example:
+					  parent.insertBefore(newItem, parent.firstChild);
+
+					16. element.insertAdjacentHTML(position, html)
+					- Inserts HTML at a specific position relative to the element.
+					- Positions: "beforebegin", "afterbegin", "beforeend", "afterend"
+					- Example:
+					  box.insertAdjacentHTML("beforeend", "<p>Appended!</p>");
+
+					17. element.cloneNode(deep)
+					- Clones an element. If deep is true, clones children too.
+					- Example:
+					  const copy = original.cloneNode(true);
+					  document.body.appendChild(copy);
+
+					18. element.replaceChild(newNode, oldNode)
+					- Replaces one child node with another.
+					- Example:
+					  parent.replaceChild(newItem, oldItem);
+
+					19. element.hasChildNodes()
+					- Returns true if the element has any child nodes.
+					- Example:
+					  if (box.hasChildNodes()) { ... }
+
+					20. element.children / element.childNodes
+					- Accesses child elements or all child nodes (including text).
+					- Example:
+					  const firstChild = box.children[0];
+
+Example program:
+       HTML:
+	        <!DOCTYPE html>
+			<html lang="en">
+			<head>
+			  <meta charset="UTF-8" />
+			  <title>DOM Manipulation Example</title>
+			  <link rel="stylesheet" href="style.css" />
+			</head>
+			<body>
+			  <h1 id="main-title">Welcome!</h1>
+
+			  <input type="text" id="nameInput" placeholder="Enter your name" />
+			  <button id="submitBtn">Greet Me</button>
+
+			  <div id="greetingBox"></div>
+
+			  <button id="changeColorBtn">Change Background</button>
+			  <button id="removeGreetingBtn">Remove Greeting</button>
+
+			  <script src="script.js"></script>
+			</body>
+			</html>
+			
+			
+		JS:
+		  // Access elements using getElementById
+		const title = document.getElementById("main-title");
+		const input = document.getElementById("nameInput");
+		const greetButton = document.getElementById("submitBtn");
+		const greetingBox = document.getElementById("greetingBox");
+		const colorBtn = document.getElementById("changeColorBtn");
+		const removeBtn = document.getElementById("removeGreetingBtn");
+
+		// Change style and content
+		greetButton.addEventListener("click", () => {
+		  const name = input.value.trim();
+
+		  if (name !== "") {
+			const message = document.createElement("p");
+			message.textContent = `Hello, ${name}! 👋`;
+			message.style.fontWeight = "bold";
+			message.style.fontSize = "1.2em";
+			greetingBox.appendChild(message);
+			input.value = "";
+		  }
+		});
+
+		// Change background color on click
+		colorBtn.addEventListener("click", () => {
+		  document.body.style.backgroundColor =
+			"#" + Math.floor(Math.random() * 16777215).toString(16);
+		});
+
+		// Remove greeting messages
+		removeBtn.addEventListener("click", () => {
+		  while (greetingBox.firstChild) {
+			greetingBox.removeChild(greetingBox.firstChild);
+		  }
+		});
+		
+10. Asynchronous programming in Javascript: 
+        - By default, javascript has synchronous operations. i.e; the code execution will be line by line and the subsequent lines will execute only after its immediate
+		 previous line finishes execution.
+		- synchronous programming may lead to a delay in the execution known as blocking.
+		   Eg: console.log(1);
+		       console.log(2);
+			   for(i=0;i<100000;i++){    --> console.log(3)'s execution will be delayed until the completion oif the for loop.
+			   console.log("x"); }
+			   console.log(3);
+        
+        -asynchronous programming is also known as non blocking. It allows operations that takes time to execute to execute on the side 
+		 while the other subsequent independent lines of code will continue with the nomal execution.
+		
+11. ECMA Script: A public forum or community that defines the standards or guidelines about how scripting languages can be written, processed or executed.
+
+12. Some ES6 features: new keywords such as let and const, Arrow functions, destructuring, spread and rest operator, classes, modules, template literals, 
+                      default parameters, for of loop, promises. [check vscode ES6 features implementation]
+
+13. Ajax: Asynchronous Javascript xml: It is a technique in javascript that allows a webpage to communicate with a server in the background without having
+                                       to reload the entire page for each request.
+
+14. Working of Ajax in the background:
+                    -> An even is triggered (like the click of a button)
+					-> Javascript creates a HTTP request using XMLHttpRequest or the modern fetch() API.
+					-> The request is sent to the server asynchronously.
+					-> The server processes the request and sends a response (mostly json)
+					-> Javascript recieves the response and updates only the corresponsign part of the page rather than a complete page reload.
+
+					-> XMLHttpRequest: Its a built-in javascript object that allows webpages to communicate wita server asynchronously.
+					                   The xhr object goes through a series of ready states that reflects where it lies in the request-response cycle:
+									   1. 0: UNSENT: the xhr object is created but not opened yet.
+									   2. 1: OPENED: xhr.open() has been called but not sent yet.
+									   3. 2: HEADERS_RECIEVED: the request was sent and now the headers and status are available.
+									   4. 3: LOADING: the response is being downloaded.
+									   5. 4: DONE: the operation is complete and the full response is available.
+									   
+									   ---> XHR basic lifecycle:
+									        1. Create an instance : const xhr = new XMLHttpRequest();
+											2. Configure the request: xhr.open("GET","endpoint",true); -> first param: type of request , second param: endpoint , third param: asynchronous flag: true for asynchronous and fakse for synchronous
+											3. Set up the response handler for handling the request: xhr.onreadystatechange = function(){logic};
+											4. Send the request: xhr.send();
+									        
+
+					  
+	
+

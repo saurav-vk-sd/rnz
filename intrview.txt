@@ -1,0 +1,12 @@
+“Hi [Interviewer Name], I'm Saurav, 22 years old. I joined XYZ as a Full Stack Development intern on April 9th 
+and have been working here ever since. During my internship, I had the opportunity to explore various 
+full-stack concepts, including Spring and Maven for project development, Mockito for unit testing, 
+and RESTful and microservice-based architecture—skills that are essential for enterprise application development. 
+I'm excited to see how closely my experience aligns with the requirements of this role, and I’m looking forward 
+to the opportunity to contribute to the team.”
+
+
+
+
+I’m confident that my experience and enthusiasm will allow me to contribute effectively to Project clickfix. 
+I look forward to the possibility of joining the team and adding value to its success.

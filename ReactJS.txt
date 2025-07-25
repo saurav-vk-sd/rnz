@@ -1,0 +1,35 @@
+1. Components: In React, components are basically reusable and modular pieces of UI that is used to define the structure, behaviour and styling of the 
+               UI. It helps developers by diving the UI into smaller, more managable chunks providing modularity. They can be thought of, as, js/ts
+			   functions and classes that returns UI (html) via jsx/tsx.
+			   ->jsx: syntax extension of javascript that is used to create/define the UI by combining the power of HTML and JS.
+			          Example: i. vanilla JS: const element = document.createElement('h1');
+					                             element.style.color = "blue";
+												 element.textContent = "Hello";											 
+						      ii. jsx: const element = <h1 style = "color: blue;">Hello</h1>;
+			   ->tsx: Same as jsx but for typescript.
+			   
+			   Types of components:
+			        
+					i. Functional components: JS/TS functions that returns UI in the form of jsx/tsx. It is used to define the structure of the UI.
+					                          Functional components manages states and lifecycle through hooks.
+											  
+											  Example: import React, {useState} from 'react';
+											           function Counter() {
+													   const[count , setCount] = useState(0);
+													   
+													   return <>
+													          <div>
+															  <p> You clicked the button {count} times</p>
+															  <button onClick = () => {setCount(count + 1);}>Click me </button>
+															  </div>
+															  </>;
+															  }
+															  
+					ii. Class Components: JS/TS classes that extend React.Component that is used for the same purpose as functional components. Class components
+					                      were used before the advent of hooks and functional components. They return UI in the form of jsx/ tsx in a function called
+										  render(). They have different lifecycle methods such as componentDidMount , componentDidUpdate, componentWillUnmount and componentDidCatch.
+										  
+										  Example: class Welcome extends React.Component {
+			                                                             render() {
+                                                                                return <h1> Hello, {this.props.name}!</h1>; }																		 
+							  

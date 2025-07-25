@@ -1,0 +1,86 @@
+Complete Java Program Execution Process
+Step 1: Writing the Source Code
+Who: Developer (You!)
+
+What Happens:
+
+The programmer writes a Java source code file (.java) using a text editor or an IDE (e.g., IntelliJ, Eclipse).
+
+Step 2: Compilation (Converting .java to .class)
+Who: Java Compiler (javac)
+
+What Happens:
+
+The source code is checked for syntax errors.
+
+If valid, the Java Compiler translates the .java file into bytecode (.class), which is platform-independent.
+
+Example:
+
+bash
+javac MyProgram.java  # Generates MyProgram.class
+Step 3: Class Loading into JVM
+Who: Class Loader (Part of JVM)
+
+What Happens:
+
+Loads the .class file into memory.
+
+Places class metadata (like method definitions, static variables) into the Method Area.
+
+Divides class loading into:
+
+Bootstrap Class Loader (Loads core Java classes like java.lang.*).
+
+Application Class Loader (Loads user-defined classes).
+
+Step 4: Memory Allocation
+Who: JVM Memory Manager
+
+What Happens:
+
+Heap: Stores objects created with new.
+
+Stack: Stores local variables and method calls.
+
+Method Area: Stores class-level static data and code.
+
+Step 5: Bytecode Execution
+Who: Execution Engine (Part of JVM)
+
+What Happens:
+
+The Interpreter converts bytecode to machine instructions line-by-line (slower).
+
+The JIT Compiler (Just-In-Time Compiler) optimizes frequently used code by compiling bytecode into native code for better performance.
+
+Step 6: Running Methods & Managing Memory
+Who: JVM Stack & Heap Manager
+
+What Happens:
+
+When a method is called, a stack frame is created in the Stack.
+
+If an object is required (new keyword), it is allocated in the Heap.
+
+Once a method completes, its stack frame is removed.
+
+Step 7: Garbage Collection
+Who: Garbage Collector (GC, part of JVM)
+
+What Happens:
+
+Identifies and removes unused objects from the Heap to free up memory.
+
+Prevents memory leaks and optimizes performance.
+
+Step 8: Program Completion
+Who: JVM Shutdown Process
+
+What Happens:
+
+The main method (main()) finishes execution.
+
+The JVM clears the Stack and Heap memory.
+
+The program terminates.

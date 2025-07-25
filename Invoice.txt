@@ -1,0 +1,53 @@
+1.InvoiceDto.java (Model):
+   
+	   package com.cts.clickfix.model;
+
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public class InvoiceDto {
+		private int invoiceId;
+		private int bookingId;
+		private int serviceTypeId;
+		private int totalAmount;
+		private String paymentStatus;
+	}
+
+2. Invoice.java: (Entity)
+
+	package com.cts.clickfix.entity;
+
+	import jakarta.persistence.Entity;
+	import jakarta.persistence.Id;
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Entity
+	public class Invoice {
+		@Id
+		private int invoiceId;
+		private int bookingId;
+		private int serviceTypeId;
+		private int totalAmount;
+		private String paymentStatus;
+	}
+
+3. InvoiceRepository.java(Repository):
+
+	package com.cts.clickfix.repository;
+
+	import org.springframework.data.jpa.repository.JpaRepository;
+
+	import com.cts.clickfix.entity.Invoice;
+
+	public interface InvoiceRepository extends JpaRepository<Invoice , Integer>{
+
+	}

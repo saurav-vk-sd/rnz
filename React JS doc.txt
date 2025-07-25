@@ -1,0 +1,14 @@
+1. States : Component specific memory that are lcoal to a component instance. The hook (special functions in react that are available when react is rendering)
+            used for storing component states : useState.
+		    Eg: Components need to change what they store/show while interacted with. i.e; When a button Is clicked, when a form is filled , etc. In order to do this,
+			    Components need to remember what value they're storing.
+
+2. Rendering and committing: Before the components are displayed on the screen, they must be rendered and committed by React. This is done in 3 steps:
+                           a. Triggering a render 
+						   b. Rendering: React chooses what components has to be displayed based on the trigger.
+						   c. Committing: The changes can be observed on the screen. React delivers the components to the screen 
+						   
+						   check: https://react.dev/learn/render-and-commit#step-1-trigger-a-render
+						   
+3. Props: fundamental mechanism in react that allows components to recieve data from its parents. They're read only. It is used to control the UI and behaviour of
+          components in a top-down hierarchy.

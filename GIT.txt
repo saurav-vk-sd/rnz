@@ -1,0 +1,71 @@
+1. Git: version control system/tool. It is used to record the history of developmental changes. Developers can collaborate as a team for a project through git and github. Source codes can be managed through Git
+
+2. Git repositories: Repositories (Collection of similar objects in the same place) used to manage source codes. All the codes are stored in repositories.
+                   Types of repositories:
+				        i. Local Repositories: Used to manage source code within a local machine.
+						ii. Remote repositories (github): Allows project codes to be shared and managed by remote operators.
+
+3.Flow of code: save in remote repository -> bring to local repository.
+
+4.Commands:
+           i. git init: Used to initialize a new Git repository
+		   ii. git add file-name: adds a file from the working copy (source code) to the staging area (working tree) aka index.
+		   iii. git commit -m "message": moves the added files from the working tree to the repository.
+		   iv. git status: compares the working tree with the original working copy. If there are any changes, the changed files will be specified and if there are no changes,
+		                   the status would be "working tree clean"
+		   v. git reset: rolls back the code to its immediate previous version.
+		                 a. git reset --hard version: Allows users to roll back to a specific version.
+						                             ->How to do it: S1: git log: displays the entire logged data along with token ids for each commit.
+													                 S2: git reset --hard token id: rolls back to the commit have that token id. And the reset code is removed from everywhere.
+						 b. git reset --mixed version: Similar to --hard. The only difference is that instead of the rest code being deleted from everywhere, it is only deleted from the working tree (commit area) and the index. It still stays in the working copy only.
+						 c. git reset --soft version: The reset code is only removed from the working tree (commit area). It still stays in the staging area (index) and the working copy.
+																	 
+		   vi. git log: shows the entire history of the repsoitory with details of what changes were made, when and where they were made and so on.
+		   
+		 
+**************************ALL THESE CHNAGES WILL ONLY BE APPLIED TO THE LOCAL REPOSITORY. IF THE LOCAL DEVICE/MACHINE FAILS TO BOOT OR FACES ANY ISSUE, THE ENTIRE PROGESS WILL BE LOST. TO AVOID THIS, THE PROGRESS SHOULD BE MOVED TO THE REMOTE GIT***************************************
+
+
+5. Remote Repositories: has 2 modes => public (anybody from around the world can gain access to my repo and can clone it) , private (accessible only by the developer. This is used for industry specific projects.)
+
+6. git remote add origin "remote repo url": used to add a remote repository to the local device.
+
+7. git remote -v: Used to view all the remote repositories added to the local device.
+
+8. git push: Used for pushing code to the remote repository
+            -> git push -u origin master : Command used to push code from the master node of the local respository to the master ndoe of the remote repository.
+			
+9. Branching: Github follows a tree-like structure having one master branch and several sub branches. The master branch code is the code that runs in the live production server. So, when developers are given with tasks, the correct practice is to ake a sub branch of the master branch 
+              and apply chanegs there and then merge it later if the chnages are accepted.
+			  
+			  VISIT FOR MORE INFO: https://www.git-tower.com/learn/git/faq/create-branch/
+
+						-> git branch branchname :This command is used to create a new branch.
+
+						-> git branch: This command is used to view all of the branches present in the local device.
+
+						-> git checkout branchname: A command that is used to switch to a specified branch.		
+                        
+						-> 2 ways of updating the remote repo with the changes.
+						          a. Merging changes with the master branch and the npushing to the remote repo (only if you get approval): git checkout master -> git branch -> git merge branchname
+
+10. Access tokens: Required by each develoepr who wishes to clone, pull or merge to another private repository for collaboration.
+
+11. git clone repo-url: Command used to clone a repository into the local device. If the repository is private, you can only clone it if the repo owner makes you a collaborator or gives you the authentication credentials.
+
+12. pull-requests: A way in which developers can propose changes to the repository and request for a review of the changes and merge it with the main branch if proper.
+                  Steps:
+				        -> create a branch
+						-> add changes
+						-> commit the changes with a message
+						-> push the code to the remote repository branch
+						-> click on pull request with the message such as "Hi, I have added some changes to the codebase. Please review it and merge the changes if there are no errors"
+13. git fetch: when a developer wants to see the new changes that are applied without them being appended to his own codebase.
+
+14. get pull: The developer can not only see the new updates but it will also be appended/added to his codebase.
+
+15. git add -p file location: When there are a lot of changes that has to be committed, this command can be used to commit chnages as patches along with custom commit messages after each patch if required.
+                              Steps:
+                                    i. git status -> reveals all the uncommitted and unadded files
+                                    ii. git add -p file location: Select any uncommitted/ unadded files, copy their name and paste it in the command.
+ 
